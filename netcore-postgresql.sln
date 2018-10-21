@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxApp.WebAPI", "SandboxApp.WebAPI\SandboxApp.WebAPI.csproj", "{08A0193B-C8D4-4B95-BD71-175E3C01241F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxApp.Model", "SandboxApp.Model\SandboxApp.Model.csproj", "{4B26D1E2-54AF-4958-8A24-3415A0B7E36C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08A0193B-C8D4-4B95-BD71-175E3C01241F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A0193B-C8D4-4B95-BD71-175E3C01241F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A0193B-C8D4-4B95-BD71-175E3C01241F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A0193B-C8D4-4B95-BD71-175E3C01241F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B26D1E2-54AF-4958-8A24-3415A0B7E36C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B26D1E2-54AF-4958-8A24-3415A0B7E36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B26D1E2-54AF-4958-8A24-3415A0B7E36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B26D1E2-54AF-4958-8A24-3415A0B7E36C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CDB9191E-08AA-42B7-9A34-AAD0626BB83B}
+	EndGlobalSection
+EndGlobal
