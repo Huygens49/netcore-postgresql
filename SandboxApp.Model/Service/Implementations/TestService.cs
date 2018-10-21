@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SandboxApp.Model.Domain;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SandboxApp.Model.Service.Implementations
 {
@@ -22,7 +23,10 @@ namespace SandboxApp.Model.Service.Implementations
 
         public TestTable Get(int id)
         {
-            return _context.TestTable.Find(id);
+            return _context.TestTable
+                .Include(t => t.TestSubTable)
+                .Where(t => t.Testid == id)
+                .FirstOrDefault();
         }
 
         public TestTable Add(TestTable testTable)
