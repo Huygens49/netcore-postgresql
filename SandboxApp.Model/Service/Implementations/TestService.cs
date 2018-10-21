@@ -32,18 +32,22 @@ namespace SandboxApp.Model.Service.Implementations
         public TestTable Add(TestTable testTable)
         {
             _context.TestTable.Add(testTable);
+            _context.SaveChanges();
+
             return testTable;
         }
 
         public void Update(TestTable testTable)
         {
             _context.TestTable.Update(testTable);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var testTable = _context.TestTable.Find(id);
             _context.Remove(testTable);
+            _context.SaveChanges();
         }
     }
 }
