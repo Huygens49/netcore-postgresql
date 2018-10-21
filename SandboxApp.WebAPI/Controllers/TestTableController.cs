@@ -8,13 +8,13 @@ using SandboxApp.Model.Domain;
 
 namespace SandboxApp.WebAPI.Controllers
 {
-    [Route("TestTables")]
+    [Route("[controller]")]
     [ApiController]
-    public class TestTableController : ControllerBase
+    public class TestTablesController : ControllerBase
     {
         private readonly ITestService _testService;
 
-        public TestTableController(ITestService testService)
+        public TestTablesController(ITestService testService)
         {
             _testService = testService;
         }
