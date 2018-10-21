@@ -28,9 +28,18 @@ namespace SandboxApp.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options =>
+                {
+                    // To avoid endless looping when converting model to JSON
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
+
             services.AddDbContext<PostgresContext>(options => options.UseNpgsql(Configuration.GetConnectionString("SandboxDatabase")));
 
+            services.AddCors();
+
+            // Service classes
             services.AddScoped<ITestService, TestService>();
 
             // Swagger
@@ -51,6 +60,8 @@ namespace SandboxApp.WebAPI
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader());
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
