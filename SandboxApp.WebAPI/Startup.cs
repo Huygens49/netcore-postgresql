@@ -33,6 +33,7 @@ namespace SandboxApp.WebAPI
 
             // Inject service classes
             services.AddScoped<ITestService, TestService>();
+            services.AddScoped<ITestSubService, TestSubService>();
 
             // Swagger
             services.AddSwaggerGen(c =>

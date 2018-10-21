@@ -9,30 +9,22 @@ namespace SandboxApp.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class TestTablesController : ControllerBase
+    public class TestSubTablesController : ControllerBase
     {
-        private readonly ITestService _testService;
+        private readonly ITestSubService _testSubService;
 
-        public TestTablesController(ITestService testService)
+        public TestSubTablesController(ITestSubService testSubService)
         {
-            _testService = testService;
-        }
-
-        #region TestTable
-
-        [HttpGet]
-        public ActionResult<List<TestTable>> GetAll()
-        {
-            return _testService.GetAll();
+            _testSubService = testSubService;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TestTable> Get([FromRoute] int id)
+        public ActionResult<TestSubTable> GetSubTable([FromRoute] int id)
         {
             try
             {
                 // This call will include the sub-items
-                return _testService.Get(id);
+                return _testSubService.Get(id);
             }
             catch (Exception ex)
             {
@@ -43,12 +35,12 @@ namespace SandboxApp.WebAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add([FromBody] TestTable testTable)
+        public ActionResult AddSubTable([FromBody] TestSubTable testSubTable)
         {
             try
             {
-                _testService.Add(testTable);
-                return CreatedAtAction("Get", new { id = testTable.Testid }, testTable);
+                _testSubService.Add(testSubTable);
+                return CreatedAtAction("GetSubTable", new { id = testSubTable.Testid }, testSubTable);
             }
             catch (Exception ex)
             {
@@ -60,11 +52,11 @@ namespace SandboxApp.WebAPI.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update([FromBody] TestTable testTable)
+        public ActionResult Update([FromBody] TestSubTable testSubTable)
         {
             try
             {
-                _testService.Update(testTable);
+                _testSubService.Update(testSubTable);
                 return NoContent();
             }
             catch (Exception ex)
@@ -77,11 +69,11 @@ namespace SandboxApp.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] int id)
+        public ActionResult DeleteSubTable([FromRoute] int id)
         {
             try
             {
-                _testService.Delete(id);
+                _testSubService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)
@@ -91,13 +83,5 @@ namespace SandboxApp.WebAPI.Controllers
                 return StatusCode(500);
             }
         }
-
-        #endregion
-
-        #region Sub Items
-
-
-
-        #endregion
     }
 }
