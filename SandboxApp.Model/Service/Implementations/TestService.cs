@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 using SandboxApp.Model.Domain;
+using SandboxApp.Model.Exceptions;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace SandboxApp.Model.Service.Implementations
 {
@@ -23,14 +22,21 @@ namespace SandboxApp.Model.Service.Implementations
 
         public TestTable Get(int id)
         {
-            return _context.TestTable
+            var testTable = _context.TestTable
                 .Include(t => t.TestSubTable)
                 .Where(t => t.Testid == id)
                 .FirstOrDefault();
+
+            if (testTable == null) throw new ItemNotFoundException(string.Format("TestTable {0} not found.", id));
+
+            return testTable;
         }
 
         public TestTable Add(TestTable testTable)
         {
+            // Pretend description is required
+            if (string.IsNullOrEmpty(testTable.Testdescription)) throw new InvalidInputException("Required field missing.");
+
             _context.TestTable.Add(testTable);
             _context.SaveChanges();
 
@@ -39,13 +45,27 @@ namespace SandboxApp.Model.Service.Implementations
 
         public void Update(TestTable testTable)
         {
-            _context.TestTable.Update(testTable);
+            var existingTestTable = _context.TestTable.Find(testTable.Testid);
+
+            if (existingTestTable == null) throw new ItemNotFoundException(string.Format("TestTable {0} not found.", testTable.Testid));
+            if (string.IsNullOrEmpty(testTable.Testdescription)) throw new InvalidInputException("Required field missing.");
+
+            // Entity Framework is weird and this seems like the only away to avoid all exception states?
+            existingTestTable.Testdescription = testTable.Testdescription;
+            existingTestTable.Testnumber = testTable.Testnumber;
+            existingTestTable.Testdecimal = testTable.Testdecimal;
+            existingTestTable.Testdate = testTable.Testdate;
+
+            _context.TestTable.Update(existingTestTable);
             _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var testTable = _context.TestTable.Find(id);
+
+            if (testTable == null) throw new ItemNotFoundException(string.Format("TestTable {0} not found.", testTable.Testid));
+
             _context.Remove(testTable);
             _context.SaveChanges();
         }

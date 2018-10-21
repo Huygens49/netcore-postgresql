@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SandboxApp.Model.Service;
+﻿using Microsoft.AspNetCore.Mvc;
 using SandboxApp.Model.Domain;
+using SandboxApp.Model.Exceptions;
+using SandboxApp.Model.Service;
+using System;
+using System.Collections.Generic;
 
 namespace SandboxApp.WebAPI.Controllers
 {
@@ -19,6 +18,8 @@ namespace SandboxApp.WebAPI.Controllers
             _testService = testService;
         }
 
+        #region TestTable
+
         [HttpGet]
         public ActionResult<List<TestTable>> GetAll()
         {
@@ -28,8 +29,75 @@ namespace SandboxApp.WebAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<TestTable> Get([FromRoute] int id)
         {
-            // This call will include the sub-items
-            return _testService.Get(id);
+            try
+            {
+                // This call will include the sub-items
+                return _testService.Get(id);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ItemNotFoundException) return NotFound();
+
+                return StatusCode(500);
+            }
         }
+
+        [HttpPost]
+        public ActionResult Add([FromBody] TestTable testTable)
+        {
+            try
+            {
+                _testService.Add(testTable);
+                return CreatedAtAction("Get", new { id = testTable.Testid }, testTable);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ItemNotFoundException) return NotFound();
+                else if (ex is InvalidInputException) return BadRequest();
+
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPut]
+        public ActionResult Update([FromBody] TestTable testTable)
+        {
+            try
+            {
+                _testService.Update(testTable);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                if (ex is ItemNotFoundException) return NotFound();
+                else if (ex is InvalidInputException) return BadRequest();
+
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] int id)
+        {
+            try
+            {
+                _testService.Delete(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                if (ex is ItemNotFoundException) return NotFound();
+
+                return StatusCode(500);
+            }
+        }
+
+        #endregion
+
+        #region Sub Items
+
+
+
+        #endregion
     }
 }
