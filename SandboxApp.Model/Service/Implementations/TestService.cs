@@ -27,7 +27,7 @@ namespace SandboxApp.Model.Service.Implementations
                 .Where(t => t.Testid == id)
                 .FirstOrDefault();
 
-            if (testTable == null) throw new ItemNotFoundException(string.Format("TestTable {0} not found.", id));
+            if (testTable == null) throw new ItemNotFoundException($"TestTable {id} not found.");
 
             return testTable;
         }
@@ -47,7 +47,7 @@ namespace SandboxApp.Model.Service.Implementations
         {
             var existingTestTable = _context.TestTable.Find(testTable.Testid);
 
-            if (existingTestTable == null) throw new ItemNotFoundException(string.Format("TestTable {0} not found.", testTable.Testid));
+            if (existingTestTable == null) throw new ItemNotFoundException($"TestTable {testTable.Testid} not found.");
             if (string.IsNullOrEmpty(testTable.Testdescription)) throw new InvalidInputException("Required field missing.");
 
             // Entity Framework is weird and this seems like the only away to avoid all exception states?
@@ -64,7 +64,7 @@ namespace SandboxApp.Model.Service.Implementations
         {
             var testTable = _context.TestTable.Find(id);
 
-            if (testTable == null) throw new ItemNotFoundException(string.Format("TestTable {0} not found.", testTable.Testid));
+            if (testTable == null) throw new ItemNotFoundException($"TestTable {id} not found.");
 
             _context.Remove(testTable);
             _context.SaveChanges();

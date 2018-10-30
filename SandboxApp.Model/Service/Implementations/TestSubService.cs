@@ -25,7 +25,7 @@ namespace SandboxApp.Model.Service.Implementations
         {
             var testSubTable = _context.TestSubTable.Find(id);
 
-            if (testSubTable == null) throw new ItemNotFoundException(string.Format("TestSubTable {0} not found.", id));
+            if (testSubTable == null) throw new ItemNotFoundException($"TestSubTable {id} not found.");
 
             return testSubTable;
         }
@@ -45,7 +45,7 @@ namespace SandboxApp.Model.Service.Implementations
         {
             var existingSubTable = _context.TestSubTable.Find(testSubTable.Testsubid);
 
-            if (existingSubTable == null) throw new ItemNotFoundException(string.Format("TestSubTable {0} not found.", testSubTable.Testsubid));
+            if (existingSubTable == null) throw new ItemNotFoundException($"TestSubTable {testSubTable.Testsubid} not found.");
             if (string.IsNullOrEmpty(testSubTable.Testsubdescription)) throw new InvalidInputException("Required field missing.");
 
             existingSubTable.Testsubdescription = testSubTable.Testsubdescription;
@@ -59,7 +59,7 @@ namespace SandboxApp.Model.Service.Implementations
         {
             var testSubTable = _context.TestSubTable.Find(id);
 
-            if (testSubTable == null) throw new ItemNotFoundException(string.Format("TestTable {0} not found.", testSubTable.Testsubid));
+            if (testSubTable == null) throw new ItemNotFoundException($"TestSubTable {id} not found.");
 
             _context.Remove(testSubTable);
             _context.SaveChanges();
