@@ -32,15 +32,13 @@ namespace SandboxApp.Model.Service.Implementations
             return testTable;
         }
 
-        public TestTable Add(TestTable testTable)
+        public void Add(TestTable testTable)
         {
             // Pretend description is required
             if (string.IsNullOrEmpty(testTable.Testdescription)) throw new InvalidInputException("Required field missing.");
 
             _context.TestTable.Add(testTable);
             _context.SaveChanges();
-
-            return testTable;
         }
 
         public void Update(TestTable testTable)

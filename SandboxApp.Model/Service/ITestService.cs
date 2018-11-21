@@ -7,7 +7,7 @@ namespace SandboxApp.Model.Service
     {
         List<TestTable> GetAll();
         TestTable Get(int id);
-        TestTable Add(TestTable testTable);
+        void Add(TestTable testTable);
         void Update(TestTable testTable);
         void Delete(int id);
     }
