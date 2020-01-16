@@ -24,10 +24,7 @@ namespace SandboxApp.Model.Service.Implementations
         {
             var testTable = _context.TestTable
                 .Include(t => t.TestSubTable)
-                .Where(t => t.Testid == id)
-                .FirstOrDefault();
-
-            if (testTable == null) throw new ItemNotFoundException($"TestTable {id} not found.");
+                .FirstOrDefault(t => t.Testid == id) ?? throw new ItemNotFoundException($"TestTable {id} not found.");
 
             return testTable;
         }
